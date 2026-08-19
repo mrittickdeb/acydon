@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: ingestion-engine
+    runtime: node
+    region: oregon
+    plan: free
+    buildCommand: npm install && npx tsc
+    startCommand: node dist/index.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: DB_PATH
+        value: ./data/ingestion.db
+      - key: SCRAPE_INTERVAL_MINUTES
+        value: 15
+      - key: ENABLE_REMOTEOK
+        value: true
+      - key: ENABLE_HACKERNEWS
+        value: true
+    healthCheckPath: /api/health
+    autoDeploy: true

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Acdyon Ingestion Engine — Real-time job data pipeline dashboard with live monitoring, health metrics, and scrape analytics.">
+  <title>Ingestion Engine — Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- ─── Top Bar ─── -->
+  <header id="topbar">
+    <div class="topbar-left">
+      <div class="logo">
+        <span class="logo-icon">⬡</span>
+        <span class="logo-text">Ingestion Engine</span>
+        <span class="logo-version">v1.0</span>
+      </div>
+      <div id="system-status" class="status-badge status-unknown">
+        <span class="status-dot"></span>
+        <span class="status-label">Connecting…</span>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <div class="topbar-stat">
+        <span class="stat-label">Sources</span>
+        <span id="active-sources" class="stat-value">—</span>
+      </div>
+      <div class="topbar-stat">
+        <span class="stat-label">Jobs</span>
+        <span id="total-jobs" class="stat-value">—</span>
+      </div>
+      <div class="topbar-stat">
+        <span class="stat-label">Last Scrape</span>
+        <span id="last-scrape" class="stat-value">—</span>
+      </div>
+      <button id="btn-scrape" class="btn btn-primary" title="Trigger manual scrape (Shortcut: R)">
+        <span class="btn-icon">↻</span> Scrape Now
+      </button>
+    </div>
+  </header>
+
+  <!-- ─── Main Layout ─── -->
+  <main id="main-grid">
+    <!-- Left Column: Job Feed -->
+    <section id="feed-panel" class="panel">
+      <div class="panel-header">
+        <h2>Live Job Feed</h2>
+        <div class="panel-controls">
+          <input type="text" id="search-input" class="search-box" placeholder="Filter jobs… (F)" autocomplete="off">
+          <select id="source-filter" class="select-box">
+            <option value="">All Sources</option>
+            <option value="remoteok">RemoteOK</option>
+            <option value="hackernews">HackerNews</option>
+          </select>
+        </div>
+      </div>
+      <div id="job-list" class="job-list">
+        <div class="empty-state">
+          <div class="empty-icon">📡</div>
+          <p>Waiting for data…</p>
+          <p class="empty-sub">Jobs will appear here as they're scraped</p>
+        </div>
+      </div>
+      <div id="pagination" class="pagination">
+        <button id="btn-prev" class="btn btn-ghost" disabled>← Prev</button>
+        <span id="page-info" class="page-info">—</span>
+        <button id="btn-next" class="btn btn-ghost" disabled>Next →</button>
+      </div>
+    </section>
+
+    <!-- Right Column: Health & Metrics -->
+    <aside id="metrics-panel">
+      <!-- Health Cards -->
+      <div class="panel" id="health-panel">
+        <div class="panel-header">
+          <h2>Source Health</h2>
+        </div>
+        <div id="health-cards" class="health-cards">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <!-- Scrape Runs -->
+      <div class="panel" id="runs-panel">
+        <div class="panel-header">
+          <h2>Recent Runs</h2>
+        </div>
+        <div id="runs-list" class="runs-list">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <!-- Stats Summary -->
+      <div class="panel" id="stats-panel">
+        <div class="panel-header">
+          <h2>Pipeline Stats</h2>
+        </div>
+        <div id="stats-grid" class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-card-value" id="stat-total">—</div>
+            <div class="stat-card-label">Total Jobs</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-value" id="stat-24h">—</div>
+            <div class="stat-card-label">Last 24h</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-value" id="stat-confidence">—</div>
+            <div class="stat-card-label">Avg Confidence</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-value" id="stat-ws">—</div>
+            <div class="stat-card-label">WS Clients</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- ─── Log Bar ─── -->
+  <footer id="log-bar">
+    <div class="log-header">
+      <span class="log-title">⚡ Activity Log</span>
+      <button id="btn-clear-log" class="btn btn-ghost btn-sm">Clear</button>
+    </div>
+    <div id="log-stream" class="log-stream">
+      <div class="log-entry log-info">
+        <span class="log-time">--:--:--</span>
+        <span class="log-msg">Connecting to engine…</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
