@@ -19,5 +19,7 @@ services:
         value: true
       - key: ENABLE_HACKERNEWS
         value: true
+      - key: NODE_VERSION
+        value: 20
     healthCheckPath: /api/health
     autoDeploy: true
